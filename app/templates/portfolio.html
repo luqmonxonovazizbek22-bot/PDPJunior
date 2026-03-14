@@ -49,82 +49,49 @@
         </div>
 
         <div class="works-grid" aria-label="Student works">
+            {% for portfolio in portfolios %}
             <article class="work-card">
                 <div class="work-media">
                     <img
                             class="work-image"
-                            src="{% static 'images/memory_games.png' %}"
+                            src="{{ portfolio.image.url }}"
                             alt="Memory Game"
                     />
                 </div>
                 <div class="work-body">
-                    <h3 class="work-name">Memory Game</h3>
+                    <h3 class="work-name">{{ portfolio.title }}</h3>
                     <div class="work-author">
                         <img
                                 class="work-avatar"
-                                src="{% static 'images/megamart.png' %}"
-                                alt=""
+                                src="{{ portfolio.image_author.url }}"
+                                alt="abed"
                         />
-                        <span class="work-author-name">Muhammadali Sagdiyyev</span>
+                        <span class="work-author-name">{{ portfolio.auther }}</span>
                     </div>
                     <a class="work-btn" href="#">Ko‘rish</a>
                 </div>
             </article>
-
-            <article class="work-card">
-                <div class="work-media">
-                    <img
-                            class="work-image"
-                            src="{% static 'images/megamart.png' %}"
-                            alt="MegaMark"
-                    />
-                </div>
-                <div class="work-body">
-                    <h3 class="work-name">MegaMark</h3>
-                    <div class="work-author">
-                        <img
-                                class="work-avatar"
-                                src="{% static 'images/megamart.png' %}"
-                                alt=""
-                        />
-                        <span class="work-author-name">Hamidulla Mamadalimov</span>
-                    </div>
-                    <a class="work-btn" href="#">Ko‘rish</a>
-                </div>
-            </article>
-
-            <article class="work-card">
-                <div class="work-media">
-                    <img
-                            class="work-image"
-                            src="{% static 'images/gaming.png' %}"
-                            alt="Online market"
-                    />
-                </div>
-                <div class="work-body">
-                    <h3 class="work-name">Online market</h3>
-                    <div class="work-author">
-                        <img
-                                class="work-avatar"
-                                src="{% static 'images/gaming.png' %}"
-                                alt=""
-                        />
-                        <span class="work-author-name">Shaxriyor Zayniddinov</span>
-                    </div>
-                    <a class="work-btn" href="#">Ko‘rish</a>
-                </div>
-            </article>
+            {% endfor %}
         </div>
     </div>
 
     <nav class="pagination" aria-label="Portfolio pagination">
-        <a class="pg-btn pg-btn--icon" href="#">‹</a>
+        {% if page_obj.has_previous %}
+        <a class="pg-btn pg-btn--icon" href="?page={{ page_obj.previous_page_number }}">‹</a>
+        {% endif %}
+    {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+            <a class="pg-btn pg-btn--active" href="#">{{ page }}</a>
+        {% else %}
+            <a class="pg-btn" href="?page={{ page }}">{{ page }}</a>
+        {% endif %}
+    {% endfor %}
 
-        <a class="pg-btn pg-btn--active" href="#">1</a>
-        <a class="pg-btn" href="#">2</a>
-        <a class="pg-btn" href="#">3</a>
 
-        <a class="pg-btn pg-btn--icon" href="#">›</a>
+
+        {% if page_obj.has_next %}
+        <a class="pg-btn pg-btn--icon" href="?page={{ page_obj.next_page_number }}">›</a>
+        {% endif %}
     </nav>
 </section>
 

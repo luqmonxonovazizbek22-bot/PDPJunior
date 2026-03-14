@@ -1,8 +1,10 @@
+
+
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, ListView
 
 from app.form import ContactForm
-from app.models import Mentor
+from app.models import Mentor, Portfolio
 
 
 class IndexView(TemplateView):
@@ -22,8 +24,11 @@ class MentorView(TemplateView):
         context['mentors'] = Mentor.objects.all()
         return context
 
-class PortfolioView(TemplateView):
+class PortfolioView(ListView):
     template_name = 'portfolio.html'
+    context_object_name = 'portfolios'
+    queryset = Portfolio.objects.all()
+    paginate_by = 3
 
 class TeamView(TemplateView):
     template_name = 'team.html'
